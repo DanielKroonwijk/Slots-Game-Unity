@@ -18,9 +18,9 @@ public class InititiateGameObjects : MonoBehaviour
     public GameObject symbol9;
     public GameObject symbol10;
 
-    public GameObject[] Initiate()
+    public void Initiate(out GameObject[] gameObjects)
     {
-        var gameObjects = new GameObject[11];
+        gameObjects = new GameObject[11];
 
         gameObjects[0] = symbol0;
         gameObjects[1] = symbol1;
@@ -33,8 +33,6 @@ public class InititiateGameObjects : MonoBehaviour
         gameObjects[8] = symbol8;
         gameObjects[9] = symbol9;
         gameObjects[10] = symbol10;
-
-        return gameObjects;
     }
 }
 

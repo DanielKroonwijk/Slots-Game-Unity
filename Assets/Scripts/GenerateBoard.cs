@@ -8,34 +8,34 @@ namespace Assets.Scripts
 {
     class GenerateNewBoard
     {
-        public void Generate(GameInfo gameInfo, Symbol[] symbols, out Symbol[,] gameBoard)
+        public void Generate(out Symbol[,] gameBoard)
         {
-            gameBoard = Board(gameInfo, symbols);
+            gameBoard = Board();
         }
 
-        public Symbol[,] Board(GameInfo gameInfo, Symbol[] symbols)
+        public Symbol[,] Board()
         {
             var gameBoardNumber = 0;
-            var gameBoardSymbols = new Symbol[gameInfo.boardColumn, gameInfo.boardRow];
-            for (int column = 0; column < gameInfo.boardColumn; column++)
+            var gameBoardSymbols = new Symbol[GameLibrary.gameInfo.boardColumn, GameLibrary.gameInfo.boardRow];
+            for (int column = 0; column < GameLibrary.gameInfo.boardColumn; column++)
             {
-                for (int row = 0; row < gameInfo.boardRow; row++)
+                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
                 {
-                    gameBoardNumber = RandomNumber(gameInfo, symbols);
-                    gameBoardSymbols[column, row] = TransformNumber(symbols, gameBoardNumber);
+                    gameBoardNumber = RandomNumber();
+                    gameBoardSymbols[column, row] = TransformNumber(gameBoardNumber);
                 }
             }
 
             return gameBoardSymbols;
         }
 
-        public int RandomNumber(GameInfo gameinfo, Symbol[] symbols)
+        public int RandomNumber()
         {
 
             int chance = 0;
-            for (int i = 0; i < symbols.Length - gameinfo.bonusSymbols; i++)
+            for (int i = 0; i < GameLibrary.symbols.Length - GameLibrary.gameInfo.bonusSymbols; i++)
             {
-                var symbol = symbols[i];
+                var symbol = GameLibrary.symbols[i];
                 chance += symbol.symbolChance;
             }
 
@@ -46,16 +46,16 @@ namespace Assets.Scripts
             return randomNumber;
         }
 
-        public Symbol TransformNumber(Symbol[] symbols, int gameBoardNumber)
+        public Symbol TransformNumber(int gameBoardNumber)
         {
             Symbol numberInSymbol = new Symbol();
             int lastHighestNumber = 0;
-            for (int i = 0; i < symbols.Length; i++)
+            for (int i = 0; i < GameLibrary.symbols.Length; i++)
             {
-                var symbol = symbols[i];
+                var symbol = GameLibrary.symbols[i];
                 if ((gameBoardNumber >= lastHighestNumber) && (gameBoardNumber <= symbol.symbolChance + lastHighestNumber - 1))
                 {
-                    numberInSymbol = symbols[i];
+                    numberInSymbol = GameLibrary.symbols[i];
                     lastHighestNumber += symbol.symbolChance;
                 }
                 else

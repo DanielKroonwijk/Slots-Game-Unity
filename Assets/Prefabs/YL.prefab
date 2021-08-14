@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 5147053976997494617}
   - component: {fileID: 4248621974501418496}
   - component: {fileID: 4636620889987838407}
-  - component: {fileID: 458618491374431715}
-  - component: {fileID: -5243780385267257032}
+  - component: {fileID: -5456175901564063860}
   m_Layer: 0
   m_Name: YL
   m_TagString: Untagged
@@ -83,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &458618491374431715
+--- !u!114 &-5456175901564063860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,28 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2431719975291496984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7ad7db9bb3d5245af80961108030f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 95beeb476f422874bb2149df147744eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 0}
---- !u!50 &-5243780385267257032
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2431719975291496984}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
+  gameObjectSpecificID: 0
