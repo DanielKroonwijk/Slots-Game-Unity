@@ -62,12 +62,12 @@
     <Compile Include="Assets\Scripts\GenerateBoard.cs" />
     <Compile Include="Assets\Scripts\InitiateMultiplier.cs" />
     <Compile Include="Assets\Scripts\SymbolManager.cs" />
+    <Compile Include="Assets\Scripts\GameLibraryManager.cs" />
+    <Compile Include="Assets\Scripts\SymbolController.cs" />
     <Compile Include="Assets\Scripts\GameElements.cs" />
     <Compile Include="Assets\Scripts\InititiateGameObjects.cs" />
     <Compile Include="Assets\Scripts\GameLibrary.cs" />
     <Compile Include="Assets\Scripts\StartSpin.cs" />
-    <Compile Include="Assets\Scripts\GameLibraryManager.cs" />
-    <Compile Include="Assets\Scripts\SymbolController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -27,9 +27,9 @@ namespace Assets.Scripts
                 initGameBoard.Generate(out GameLibrary.gameBoard);
             }
 
-            for (int column = 0; column < GameLibrary.gameInfo.boardColumn; column++)
+            for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
             {
-                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+                for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
                 {
                     Instantiate(
                         GameLibrary.gameBoard[column, row].symbolPrefab,

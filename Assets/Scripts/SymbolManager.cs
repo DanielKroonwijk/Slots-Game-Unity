@@ -19,7 +19,7 @@ namespace Assets.Scripts
 
             gameObjectSpecificID = GameLibrary.gameObjectID;
             GameLibrary.gameObjectID++;
-            if(GameLibrary.gameObjectID == 6 *5 -1)
+            if(GameLibrary.gameObjectID == 6 * 5)
             {
                 if (GameLibrary.gameStartBoard != true)
                 {
@@ -31,17 +31,28 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if((GameLibrary.allgameObjectsAssigned == true) && (GameLibrary.gameObjectID == gameObjectSpecificID) && (m_GameObjectInUse == false))
+            if ((GameLibrary.allgameObjectsAssigned == true) && (GameLibrary.gameObjectID == gameObjectSpecificID) && (m_GameObjectInUse == false))
             {
                 m_GameObjectInUse = true;
                 if (m_OldGameObject == true)
                 {
                     name = $"TargetGameObject{gameObjectSpecificID + 100}";
-                    m_GameObjectInUse = true;
                 }
                 else
                 {
                     name = $"TargetGameObject{gameObjectSpecificID}";
+                }
+            }
+            else if (m_GameObjectInUse == true)
+            {
+                if (transform.position.y <= -10)
+                {
+                    Destroy(gameObject);
+                }
+                if ((transform.position.y <= GameLibrary.symbolStopPosition[gameObjectSpecificID].y) && (m_OldGameObject != true))
+                {
+                    Destroy(GetComponent<Rigidbody2D>());
+                    transform.position = GameLibrary.symbolStopPosition[gameObjectSpecificID];
                     m_OldGameObject = true;
                     m_GameObjectInUse = false;
                 }
