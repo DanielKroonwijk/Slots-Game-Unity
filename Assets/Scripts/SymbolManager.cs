@@ -31,7 +31,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if ((GameLibrary.allgameObjectsAssigned == true) && (GameLibrary.gameObjectID == gameObjectSpecificID) && (m_GameObjectInUse == false) && GameLibrary.destroyOption == 0)
+            if ((GameLibrary.allgameObjectsAssigned == true) && (GameLibrary.gameObjectID == gameObjectSpecificID) && (m_GameObjectInUse == false))
             {
                 m_GameObjectInUse = true;
                 if (m_OldGameObject == true)
@@ -55,18 +55,11 @@ namespace Assets.Scripts
                     transform.position = GameLibrary.symbolStopPosition[gameObjectSpecificID];
                     m_OldGameObject = true;
                     m_GameObjectInUse = false;
-                    if(gameObjectSpecificID == 5 * 6 - 1)
-                    {
-                        GameLibrary.newBoardInPlace = true;
-                    }
                 }
             }
-            else if ((GameLibrary.gameObjectID == gameObjectSpecificID) && (GameLibrary.destroyOption == 1))
+            else if (GameLibrary.removeGameObjectID.Contains(gameObjectSpecificID))
             {
-                GameLibrary.destroyOption = 0;
-                GameLibrary.gameObjectID = 0;
                 Destroy(gameObject);
-                Debug.Log("removed");
             }
         }
     }

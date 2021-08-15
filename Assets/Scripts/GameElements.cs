@@ -57,7 +57,6 @@ namespace Assets.Scripts
                 {
                     if (symbol.symbolPrefab != GameLibrary.symbols[0].symbolPrefab)
                     {
-                        Debug.Log("removeSymbol");
                         removeSymbol.Add(symbol);
                     }
 
@@ -82,24 +81,21 @@ namespace Assets.Scripts
         public static void RemoveSymbols()
         {
             var count = 0;
-            for (int column = 0; column < GameLibrary.gameInfo.boardColumn; column++)
+            for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
             {
-                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+                for (int column = GameLibrary.gameInfo.boardColumn-1; column > -1 ; column--)
                 {
                     for (int i = 0; i < GameLibrary.removeSymbols.Count; i++)
                     {
                         if (GameLibrary.gameBoard[column, row].symbolPrefab == GameLibrary.removeSymbols[i].symbolPrefab)
                         {
                             GameLibrary.gameBoard[column, row] = null;
-                            GameLibrary.gameObjectID = count; //remove these and add to array or list
-                            GameLibrary.destroyOption = 1;
+                            GameLibrary.removeGameObjectID.Add(count);
                         }
                     }
                     count++;
                 }
             }
         }
-
-        
     }
 }

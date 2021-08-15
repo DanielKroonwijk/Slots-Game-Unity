@@ -11,7 +11,6 @@ namespace Assets.Scripts
     class StartSpin : MonoBehaviour
     {
         public Text chanceText;
-        private bool m_FirstPartDone = false;
         private bool m_SpinActive = false;
 
         public void OnButtonClick()
@@ -31,25 +30,31 @@ namespace Assets.Scripts
                             GameLibrary.gameObjects[0].transform.rotation);
                     }
                 }
-                m_FirstPartDone = true; 
+
+                GameLibrary.firstPartDone = true; 
             }
         }
 
-        private void FixedUpdate()
+        public void ContinueSpin()
         {
-            if ((m_FirstPartDone == true) && (GameLibrary.gameObjectID >= 5 * 6) && (GameLibrary.newBoardInPlace == true))
+            if (GameElements.CheckHit() == true)
             {
-                m_FirstPartDone = false;
+                chanceText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
+                GameElements.RemoveSymbols();
+            }
+            else
+            {
+                m_SpinActive = false;
+            }
+        }
+
+        void Update()
+        {
+            if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
+            {
+                GameLibrary.firstPartDone = false;
                 GameLibrary.gameObjectID = 0;
-                if(GameElements.CheckHit() == true)
-                {
-                    chanceText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
-                    GameElements.RemoveSymbols();
-                }
-                else
-                {
-                    m_SpinActive = false;
-                }
+                Invoke("ContinueSpin", 3f);
             }
         }
     }
