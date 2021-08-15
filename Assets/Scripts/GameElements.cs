@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public static class GameElements
     {
-        public static bool Check()
+        public static bool CheckHit()
         {
             for (int i = 0; i < GameLibrary.symbols.Length - GameLibrary.gameInfo.bonusSymbols; i++)
             {
@@ -31,6 +32,72 @@ namespace Assets.Scripts
             }
 
             return false;
+        }
+
+        public static string CalculateSymbolWin(out List<Symbol> removeSymbol)
+        {
+            double totalWinNumber = 0;
+            removeSymbol = new List<Symbol>();
+            for (int i = 0; i < GameLibrary.symbols.Length - GameLibrary.gameInfo.bonusSymbols; i++)
+            {
+                int count = 0;
+                var symbol = GameLibrary.symbols[i];
+                for (int column = 0; column < GameLibrary.gameBoard.GetLength(0); column++)
+                {
+                    for (int row = 0; row < GameLibrary.gameBoard.GetLength(1); row++)
+                    {
+                        if (GameLibrary.gameBoard[column, row].symbolPrefab == symbol.symbolPrefab)
+                        {
+                            count++;
+                        }
+                    }
+                }
+
+                if (count >= 8)
+                {
+                    if (symbol.symbolPrefab != GameLibrary.symbols[0].symbolPrefab)
+                    {
+                        Debug.Log("removeSymbol");
+                        removeSymbol.Add(symbol);
+                    }
+
+                    if ((count >= 8) && (count <= 9))
+                    {
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[0] * GameLibrary.betSize/ 100;
+                    }
+                    else if ((count >= 10) && (count <= 11))
+                    {
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[1] * GameLibrary.betSize / 100;
+                    }
+                    else
+                    {
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[2] * GameLibrary.betSize/ 100;
+                    }
+                }
+            }
+
+            return $"$  {totalWinNumber:0.00}";
+        }
+
+        public static void RemoveSymbols()
+        {
+            var count = 0;
+            for (int column = 0; column < GameLibrary.gameInfo.boardColumn; column++)
+            {
+                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+                {
+                    for (int i = 0; i < GameLibrary.removeSymbols.Count; i++)
+                    {
+                        if (GameLibrary.gameBoard[column, row].symbolPrefab == GameLibrary.removeSymbols[i].symbolPrefab)
+                        {
+                            GameLibrary.gameBoard[column, row] = null;
+                            GameLibrary.gameObjectID = count; //remove these and add to array or list
+                            GameLibrary.destroyOption = 1;
+                        }
+                    }
+                    count++;
+                }
+            }
         }
 
         

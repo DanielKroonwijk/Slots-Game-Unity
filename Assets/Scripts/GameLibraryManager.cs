@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
             var initGameBoard = new GenerateNewBoard();
             initGameBoard.Generate(out GameLibrary.gameBoard);
-            while(GameElements.Check() == true) 
+            while(GameElements.CheckHit() == true) 
             {
                 initGameBoard.Generate(out GameLibrary.gameBoard);
             }

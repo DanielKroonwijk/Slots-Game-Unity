@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e078c54c5e982a347aec3e875531f6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chanceText: {fileID: 1843922194}
 --- !u!4 &18611175
 Transform:
   m_ObjectHideFlags: 0
@@ -3225,7 +3226,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: $ 0.00
+  m_Text: $  0.00
 --- !u!222 &1843922195
 CanvasRenderer:
   m_ObjectHideFlags: 0

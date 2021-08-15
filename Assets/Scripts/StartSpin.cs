@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     class StartSpin : MonoBehaviour
     {
+        public Text chanceText;
         private bool m_FirstPartDone = false;
         private bool m_SpinActive = false;
 
@@ -35,13 +37,14 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            if ((m_FirstPartDone == true) && (GameLibrary.gameObjectID >= 5 * 6))
+            if ((m_FirstPartDone == true) && (GameLibrary.gameObjectID >= 5 * 6) && (GameLibrary.newBoardInPlace == true))
             {
                 m_FirstPartDone = false;
                 GameLibrary.gameObjectID = 0;
-                if(GameElements.Check() == true)
+                if(GameElements.CheckHit() == true)
                 {
-
+                    chanceText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
+                    GameElements.RemoveSymbols();
                 }
                 else
                 {
