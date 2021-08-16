@@ -11,13 +11,15 @@ namespace Assets.Scripts
     class StartSpin : MonoBehaviour
     {
         public Text chanceText;
-        private bool m_SpinActive = false;
+        private bool m_SecondPartDone = false;
 
         public void OnButtonClick()
         {
-            if (m_SpinActive == false)
+            if (GameLibrary.spinActive == false)
             {
-                m_SpinActive = true;
+                GameLibrary.spinActive = true;
+                GameLibrary.gameObjectID = 0;
+                GameLibrary.newSpin = true;
                 var initGameBoard = new GenerateNewBoard();
                 initGameBoard.Generate(out GameLibrary.gameBoard);
                 for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
@@ -35,17 +37,25 @@ namespace Assets.Scripts
             }
         }
 
-        public void ContinueSpin()
+        public void ContinueSpin1()
         {
             if (GameElements.CheckHit() == true)
             {
+                GameLibrary.newSpin = false;
                 chanceText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
                 GameElements.RemoveSymbols();
+                m_SecondPartDone = true;
             }
             else
             {
-                m_SpinActive = false;
+                GameLibrary.spinActive = false;
             }
+        }
+
+        public void ContinueSpin2()
+        {
+            GameLibrary.destroySymbols = false;
+            GameElements.ReAssignSymbolsID();
         }
 
         void Update()
@@ -53,8 +63,14 @@ namespace Assets.Scripts
             if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
             {
                 GameLibrary.firstPartDone = false;
-                GameLibrary.gameObjectID = 0;
-                Invoke("ContinueSpin", 3f);
+                GameLibrary.gameObjectID = -1;
+                Invoke("ContinueSpin1", 3f);
+            }
+            else if (m_SecondPartDone == true)
+            {
+                GameLibrary.destroySymbols = true;
+                m_SecondPartDone = false;
+                Invoke("ContinueSpin2", 3f);
             }
         }
     }

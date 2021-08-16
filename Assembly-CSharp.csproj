@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\InititiateGameObjects.cs" />
     <Compile Include="Assets\Scripts\GameLibrary.cs" />
     <Compile Include="Assets\Scripts\StartSpin.cs" />
+    <Compile Include="Assets\Scripts\BetSizeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

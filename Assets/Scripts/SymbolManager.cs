@@ -17,15 +17,22 @@ namespace Assets.Scripts
         {
             if (GameLibrary.gameStartBoard == true) { m_OldGameObject = true; }
 
-            gameObjectSpecificID = GameLibrary.gameObjectID;
-            GameLibrary.gameObjectID++;
-            if(GameLibrary.gameObjectID == 6 * 5)
+            if (GameLibrary.newSpin == true)
             {
-                if (GameLibrary.gameStartBoard != true)
+                gameObjectSpecificID = GameLibrary.gameObjectID;
+                GameLibrary.gameObjectID++;
+                if (GameLibrary.gameObjectID == 6 * 5)
                 {
-                    GameLibrary.allgameObjectsAssigned = true;
+                    if (GameLibrary.gameStartBoard != true)
+                    {
+                        GameLibrary.allgameObjectsAssigned = true;
+                    }
+                    GameLibrary.gameObjectID = 0;
                 }
-                GameLibrary.gameObjectID = 0;
+            }
+            else
+            {
+
             }
         }
 
@@ -57,9 +64,19 @@ namespace Assets.Scripts
                     m_GameObjectInUse = false;
                 }
             }
-            else if (GameLibrary.removeGameObjectID.Contains(gameObjectSpecificID))
+            else if ((GameLibrary.removeGameObjectID.Contains(gameObjectSpecificID)) && (GameLibrary.destroySymbols == true))
             {
                 Destroy(gameObject);
+            }
+            else if (GameLibrary.IDCount < GameLibrary.chanceGameObjectID.Count)
+            {
+                Debug.Log(GameLibrary.chanceGameObjectID[GameLibrary.IDCount]);
+                if ((GameLibrary.chanceGameObjectID[GameLibrary.IDCount] == GameLibrary.removeGameObjectID[GameLibrary.IDCount]) && (GameLibrary.reAssignGameObjectID == true))
+                {
+                    GameLibrary.chanceGameObjectID[GameLibrary.IDCount] = -1;
+                    gameObjectSpecificID = GameLibrary.removeGameObjectID[GameLibrary.IDCount];
+                    GameLibrary.IDCount++;
+                }
             }
         }
     }

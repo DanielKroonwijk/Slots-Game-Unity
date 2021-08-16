@@ -62,15 +62,15 @@ namespace Assets.Scripts
 
                     if ((count >= 8) && (count <= 9))
                     {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[0] * GameLibrary.betSize/ 100;
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[0] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
                     }
                     else if ((count >= 10) && (count <= 11))
                     {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[1] * GameLibrary.betSize / 100;
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[1] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
                     }
                     else
                     {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[2] * GameLibrary.betSize/ 100;
+                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[2] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
                     }
                 }
             }
@@ -93,9 +93,55 @@ namespace Assets.Scripts
                             GameLibrary.removeGameObjectID.Add(count);
                         }
                     }
+
                     count++;
                 }
             }
+        }
+
+        public static void ReAssignSymbolsID()
+        {
+            for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+            {
+                for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
+                {
+                    if (GameLibrary.gameBoard[column, row] == null)
+                    {
+                        int columnCount = 1;
+                        for (; ; )
+                        {
+                            if ((column != 0) && (column - columnCount > -1))
+                            {
+                                if (GameLibrary.gameBoard[column - columnCount, row] != null)
+                                {
+                                    GameLibrary.chanceGameObjectID.Add(GameLibrary.IDCount);
+                                    GameLibrary.gameBoard[column, row] = GameLibrary.gameBoard[column - columnCount, row];
+                                    GameLibrary.gameBoard[column - columnCount, row] = null;
+                                    GameLibrary.IDCount++;
+                                    break;
+                                }
+                                else
+                                {
+                                    GameLibrary.IDCount++;
+                                    columnCount++;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            GameLibrary.IDCount = 0;
+            GameLibrary.reAssignGameObjectID = true;
+        }
+
+        public static void AddNewSymbols()
+        {
+
         }
     }
 }
