@@ -34,7 +34,7 @@ namespace Assets.Scripts
             else if (GameLibrary.reAssignGameObjectID == true)
             {
                 var newGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
-                if (newGameObject == null)
+                if ((newGameObject == null) && (GameLibrary.rowID != 6))
                 {
                     GameLibrary.newGameObjectID = GameLibrary.gameObjectID;
                     var chanceGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID + m_Count}");
@@ -42,28 +42,30 @@ namespace Assets.Scripts
                     {
                         GameLibrary.chanceGameObjectID = GameLibrary.gameObjectID + m_Count;
                     }
-                    else if (GameLibrary.rowGameObjectsID[GameLibrary.rowID].Contains(GameLibrary.gameObjectID + m_Count) == true)
+                    else
                     {
                         m_Count++;
                     }
-                    else
+
+                    if ((GameLibrary.rowGameObjectsID[GameLibrary.rowID].Contains(GameLibrary.gameObjectID + m_Count) == false))
                     {
-                        if (GameLibrary.rowID < GameLibrary.gameInfo.boardRow)
+                        Debug.Log("RowInProcess++");
+                        m_Count = 1;
+                        GameLibrary.rowID++;
+                        if (GameLibrary.rowID != 6)
                         {
-                            m_Count = 1;
-                            GameLibrary.rowID++;
-                            var rowIDs = GameLibrary.rowGameObjectsID[0];
+                            var rowIDs = GameLibrary.rowGameObjectsID[GameLibrary.rowID];
                             GameLibrary.gameObjectID = rowIDs[0];
-                        }
-                        else
-                        {
-                            GameLibrary.reAssignGameObjectID = false;
                         }
                     }
                 }
+                else if (GameLibrary.rowID == 6)
+                {
+                    GameLibrary.reAssignGameObjectID = false;
+                }
                 else
                 {
-                    m_Count = 0;
+                    m_Count = 1;
                     GameLibrary.gameObjectID++;
                 }
             }

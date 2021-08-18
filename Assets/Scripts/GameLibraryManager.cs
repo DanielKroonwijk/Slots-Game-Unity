@@ -30,7 +30,6 @@ namespace Assets.Scripts
                     count++;
                 }
 
-                count++;
                 GameLibrary.rowGameObjectsID.Add(iDList);
             }
 
