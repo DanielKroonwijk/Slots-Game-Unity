@@ -33,7 +33,6 @@ namespace Assets.Scripts
             }
             else if (GameLibrary.reAssignGameObjectID == true)
             {
-                Debug.Log($"count: {m_Count}");
                 var newGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
                 if (newGameObject == null)
                 {
@@ -49,7 +48,7 @@ namespace Assets.Scripts
                     }
                     else
                     {
-                        if (GameLibrary.rowID < GameLibrary.rowGameObjectsID.Count)
+                        if (GameLibrary.rowID < GameLibrary.gameInfo.boardRow)
                         {
                             m_Count = 1;
                             GameLibrary.rowID++;
@@ -64,7 +63,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    m_Count = 1;
+                    m_Count = 0;
                     GameLibrary.gameObjectID++;
                 }
             }

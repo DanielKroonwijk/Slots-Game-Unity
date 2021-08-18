@@ -91,6 +91,7 @@ namespace Assets.Scripts
                         {
                             GameLibrary.gameBoard[column, row] = null;
                             GameLibrary.removeGameObjectID.Add(count);
+                            break;
                         }
                     }
 

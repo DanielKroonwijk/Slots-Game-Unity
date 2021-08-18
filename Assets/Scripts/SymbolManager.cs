@@ -70,7 +70,6 @@ namespace Assets.Scripts
             }
             else if (GameLibrary.reAssignGameObjectID == true)
             {
-                Debug.Log($"chance: {GameLibrary.chanceGameObjectID}");
                 if (GameLibrary.chanceGameObjectID == gameObjectSpecificID)
                 {
                     gameObjectSpecificID = GameLibrary.newGameObjectID;
