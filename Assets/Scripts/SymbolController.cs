@@ -11,17 +11,17 @@ namespace Assets.Scripts
     {
         private GameObject m_GameObjectOld;
         private GameObject m_GameObjectNew;
+        private int m_Count = 1;
         private bool m_Busy = false;
 
         private void Update()
         {
-
             if ((GameLibrary.allgameObjectsAssigned == true) && (m_Busy == false))
             {
                 m_GameObjectNew = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
                 m_GameObjectOld = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID + 100}");
 
-                if ((m_GameObjectNew != null) && (m_GameObjectOld != null) &&(m_GameObjectNew.GetComponent<Rigidbody2D>() == null) && (m_GameObjectOld.GetComponent<Rigidbody2D>() == null))
+                if ((m_GameObjectNew != null) && (m_GameObjectOld != null) && (m_GameObjectNew.GetComponent<Rigidbody2D>() == null) && (m_GameObjectOld.GetComponent<Rigidbody2D>() == null))
                 {
                     m_Busy = true;
                     GameLibrary.symbolStopPosition[GameLibrary.gameObjectID] = m_GameObjectOld.transform.position;
@@ -31,8 +31,45 @@ namespace Assets.Scripts
                     m_GameObjectNew.AddComponent<Rigidbody2D>();
                 }
             }
+            else if (GameLibrary.reAssignGameObjectID == true)
+            {
+                Debug.Log($"count: {m_Count}");
+                var newGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
+                if (newGameObject == null)
+                {
+                    GameLibrary.newGameObjectID = GameLibrary.gameObjectID;
+                    var chanceGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID + m_Count}");
+                    if ((chanceGameObject != null) && (GameLibrary.rowGameObjectsID[GameLibrary.rowID].Contains(GameLibrary.gameObjectID + m_Count) == true))
+                    {
+                        GameLibrary.chanceGameObjectID = GameLibrary.gameObjectID + m_Count;
+                    }
+                    else if (GameLibrary.rowGameObjectsID[GameLibrary.rowID].Contains(GameLibrary.gameObjectID + m_Count) == true)
+                    {
+                        m_Count++;
+                    }
+                    else
+                    {
+                        if (GameLibrary.rowID < GameLibrary.rowGameObjectsID.Count)
+                        {
+                            m_Count = 1;
+                            GameLibrary.rowID++;
+                            var rowIDs = GameLibrary.rowGameObjectsID[0];
+                            GameLibrary.gameObjectID = rowIDs[0];
+                        }
+                        else
+                        {
+                            GameLibrary.reAssignGameObjectID = false;
+                        }
+                    }
+                }
+                else
+                {
+                    m_Count = 1;
+                    GameLibrary.gameObjectID++;
+                }
+            }
 
             m_Busy = false;
-        }
+        }  
     }
 }

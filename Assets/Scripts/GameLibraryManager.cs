@@ -20,6 +20,19 @@ namespace Assets.Scripts
 
             GameLibrary.symbols = InitiateSymbols.Initiate();
 
+            int count = 0;
+            for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+            {
+                var iDList = new List<int>();
+                for (int column = GameLibrary.gameInfo.boardColumn -1; column > -1; column--)
+                {
+                    iDList.Add(count);
+                    count++;
+                }
+
+                GameLibrary.rowGameObjectsID.Add(iDList);
+            }
+
             var initGameBoard = new GenerateNewBoard();
             initGameBoard.Generate(out GameLibrary.gameBoard);
             while(GameElements.CheckHit() == true) 

@@ -68,14 +68,13 @@ namespace Assets.Scripts
             {
                 Destroy(gameObject);
             }
-            else if (GameLibrary.IDCount < GameLibrary.chanceGameObjectID.Count)
+            else if (GameLibrary.reAssignGameObjectID == true)
             {
-                Debug.Log(GameLibrary.chanceGameObjectID[GameLibrary.IDCount]);
-                if ((GameLibrary.chanceGameObjectID[GameLibrary.IDCount] == GameLibrary.removeGameObjectID[GameLibrary.IDCount]) && (GameLibrary.reAssignGameObjectID == true))
+                Debug.Log($"chance: {GameLibrary.chanceGameObjectID}");
+                if (GameLibrary.chanceGameObjectID == gameObjectSpecificID)
                 {
-                    GameLibrary.chanceGameObjectID[GameLibrary.IDCount] = -1;
-                    gameObjectSpecificID = GameLibrary.removeGameObjectID[GameLibrary.IDCount];
-                    GameLibrary.IDCount++;
+                    gameObjectSpecificID = GameLibrary.newGameObjectID;
+                    name = $"TargetGameObject{gameObjectSpecificID}";
                 }
             }
         }

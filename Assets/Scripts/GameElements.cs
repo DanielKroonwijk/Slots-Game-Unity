@@ -114,15 +114,12 @@ namespace Assets.Scripts
                             {
                                 if (GameLibrary.gameBoard[column - columnCount, row] != null)
                                 {
-                                    GameLibrary.chanceGameObjectID.Add(GameLibrary.IDCount);
                                     GameLibrary.gameBoard[column, row] = GameLibrary.gameBoard[column - columnCount, row];
                                     GameLibrary.gameBoard[column - columnCount, row] = null;
-                                    GameLibrary.IDCount++;
                                     break;
                                 }
                                 else
                                 {
-                                    GameLibrary.IDCount++;
                                     columnCount++;
                                 }
                             }
@@ -134,9 +131,6 @@ namespace Assets.Scripts
                     }
                 }
             }
-
-            GameLibrary.IDCount = 0;
-            GameLibrary.reAssignGameObjectID = true;
         }
 
         public static void AddNewSymbols()

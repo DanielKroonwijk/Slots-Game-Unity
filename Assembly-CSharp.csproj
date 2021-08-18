@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\InitiateSymbols.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />
     <Compile Include="Assets\Scripts\Vectors.cs" />
+    <Compile Include="Assets\Scripts\BetSizeManager.cs" />
     <Compile Include="Assets\Scripts\GenerateBoard.cs" />
     <Compile Include="Assets\Scripts\InitiateMultiplier.cs" />
     <Compile Include="Assets\Scripts\SymbolManager.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Assets\Scripts\InititiateGameObjects.cs" />
     <Compile Include="Assets\Scripts\GameLibrary.cs" />
     <Compile Include="Assets\Scripts\StartSpin.cs" />
-    <Compile Include="Assets\Scripts\BetSizeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -56,15 +56,17 @@ namespace Assets.Scripts
         {
             GameLibrary.destroySymbols = false;
             GameElements.ReAssignSymbolsID();
+            GameLibrary.reAssignGameObjectID = true;
         }
 
         void Update()
         {
             if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
             {
+                GameLibrary.allgameObjectsAssigned = false;
                 GameLibrary.firstPartDone = false;
-                GameLibrary.gameObjectID = -1;
-                Invoke("ContinueSpin1", 3f);
+                GameLibrary.gameObjectID = 0;
+                Invoke("ContinueSpin1", 2f);
             }
             else if (m_SecondPartDone == true)
             {
