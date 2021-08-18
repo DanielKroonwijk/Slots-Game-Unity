@@ -31,6 +31,9 @@ namespace Assets.Scripts
         public static bool newSpin = true;
         public static bool reAssignGameObjectID = false;
         public static bool destroySymbols = false;
+        public static bool addSymbols = false;
+        public static bool assignNewSymbolID = false;
+        public static bool allNewSymbolsAssigned = false;
 
         public static int betSizeID;
     } 

@@ -12,6 +12,7 @@ namespace Assets.Scripts
     {
         public Text chanceText;
         private bool m_SecondPartDone = false;
+        private bool m_ThirdPartDone = false;
 
         public void OnButtonClick()
         {
@@ -57,6 +58,14 @@ namespace Assets.Scripts
             GameLibrary.destroySymbols = false;
             GameElements.ReAssignSymbolsID();
             GameLibrary.reAssignGameObjectID = true;
+            GameElements.AddNewSymbols();
+            GameLibrary.addSymbols = true;
+            m_ThirdPartDone = true;
+        }
+
+        public void ContinueSpin3()
+        {
+            
         }
 
         void Update()
@@ -64,6 +73,7 @@ namespace Assets.Scripts
             if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
             {
                 GameLibrary.allgameObjectsAssigned = false;
+                GameLibrary.allNewSymbolsAssigned = false;
                 GameLibrary.firstPartDone = false;
                 GameLibrary.gameObjectID = 0;
                 Invoke("ContinueSpin1", 2f);
@@ -72,7 +82,12 @@ namespace Assets.Scripts
             {
                 GameLibrary.destroySymbols = true;
                 m_SecondPartDone = false;
-                Invoke("ContinueSpin2", 3f);
+                Invoke("ContinueSpin2", 1f);
+            }
+            else if (m_ThirdPartDone == true)
+            {
+                m_ThirdPartDone = false;
+                Invoke("ContinueSpin3", 3f);
             }
         }
     }

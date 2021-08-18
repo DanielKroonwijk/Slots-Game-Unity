@@ -30,9 +30,16 @@ namespace Assets.Scripts
                     GameLibrary.gameObjectID = 0;
                 }
             }
-            else
+            else if (GameLibrary.assignNewSymbolID == true)
             {
-
+                gameObjectSpecificID = GameLibrary.addGameObjectID[GameLibrary.newGameObjectID];
+                GameLibrary.newGameObjectID++;
+                if (GameLibrary.newGameObjectID >= GameLibrary.addGameObjectID.Count)
+                {
+                    GameLibrary.assignNewSymbolID = false;
+                    GameLibrary.newGameObjectID = 0;
+                    GameLibrary.allNewSymbolsAssigned = true;
+                }
             }
         }
 
@@ -50,8 +57,18 @@ namespace Assets.Scripts
                     name = $"TargetGameObject{gameObjectSpecificID}";
                 }
             }
+            else if ((GameLibrary.allNewSymbolsAssigned == true) && (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count))
+            {
+                if ((GameLibrary.addGameObjectID[GameLibrary.gameObjectID] == gameObjectSpecificID) && (m_GameObjectInUse == false))
+                {
+                    Debug.Log("2");
+                    m_GameObjectInUse = true;
+                    name = $"TargetGameObject{gameObjectSpecificID}";
+                }
+            }
             else if (m_GameObjectInUse == true)
             {
+                if (GameLibrary.allNewSymbolsAssigned == true) { Debug.Log("1"); }
                 if (transform.position.y <= -10)
                 {
                     Destroy(gameObject);
@@ -79,3 +96,4 @@ namespace Assets.Scripts
         }
     }
 }
+

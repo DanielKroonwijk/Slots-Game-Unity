@@ -83,7 +83,7 @@ namespace Assets.Scripts
             var count = 0;
             for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
             {
-                for (int column = GameLibrary.gameInfo.boardColumn-1; column > -1 ; column--)
+                for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
                 {
                     for (int i = 0; i < GameLibrary.removeSymbols.Count; i++)
                     {
@@ -136,7 +136,17 @@ namespace Assets.Scripts
 
         public static void AddNewSymbols()
         {
-
+            for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+            {
+                for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
+                {
+                    if (GameLibrary.gameBoard[column, row] == null)
+                    {
+                        var addSymbols = new GenerateNewBoard();
+                        GameLibrary.gameBoard[column, row] = addSymbols.TransformNumber(addSymbols.RandomNumber());
+                    }
+                }
+            }
         }
     }
 }

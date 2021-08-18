@@ -16,7 +16,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if ((GameLibrary.allgameObjectsAssigned == true) && (m_Busy == false))
+            if ((GameLibrary.allgameObjectsAssigned == true) && (m_Busy != true))
             {
                 m_GameObjectNew = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
                 m_GameObjectOld = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID + 100}");
@@ -28,6 +28,20 @@ namespace Assets.Scripts
                     GameLibrary.gameObjectID++;
 
                     m_GameObjectOld.AddComponent<Rigidbody2D>();
+                    m_GameObjectNew.AddComponent<Rigidbody2D>();
+                }
+            }
+            else if ((GameLibrary.allNewSymbolsAssigned == true) && (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count) && (m_Busy != true))
+            {
+                if (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count)
+                {
+                    m_GameObjectNew = GameObject.Find($"TargetGameObject{GameLibrary.addGameObjectID[GameLibrary.gameObjectID]}");
+                }
+                if ((m_GameObjectNew != null) && (m_GameObjectNew.GetComponent<Rigidbody2D>() == null))
+                {
+                    m_Busy = true;
+                    GameLibrary.gameObjectID++;
+
                     m_GameObjectNew.AddComponent<Rigidbody2D>();
                 }
             }
@@ -49,7 +63,6 @@ namespace Assets.Scripts
 
                     if ((GameLibrary.rowGameObjectsID[GameLibrary.rowID].Contains(GameLibrary.gameObjectID + m_Count) == false))
                     {
-                        Debug.Log("RowInProcess++");
                         m_Count = 1;
                         GameLibrary.rowID++;
                         if (GameLibrary.rowID != 6)
@@ -62,6 +75,7 @@ namespace Assets.Scripts
                 else if (GameLibrary.rowID == 6)
                 {
                     GameLibrary.reAssignGameObjectID = false;
+                    GameLibrary.gameObjectID = 0;
                 }
                 else
                 {
@@ -69,6 +83,33 @@ namespace Assets.Scripts
                     GameLibrary.gameObjectID++;
                 }
             }
+            else if ((GameLibrary.addSymbols == true) && (m_Busy != true))
+            {
+                m_Busy = true;
+                int count = 0;
+                GameLibrary.newGameObjectID = 0;
+                GameLibrary.assignNewSymbolID = true;
+                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+                {
+                    for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
+                    {
+                        var newGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
+                        if (newGameObject == null)
+                        {
+                            GameLibrary.addGameObjectID.Add(count);
+
+                            Instantiate(
+                                GameLibrary.gameBoard[column, row].symbolPrefab,
+                                GameLibrary.spawnVector[column, row],
+                                GameLibrary.gameObjects[0].transform.rotation);
+                        }
+                        GameLibrary.gameObjectID++;
+                        count++;
+                    }
+                }
+                GameLibrary.gameObjectID = 0;
+                GameLibrary.addSymbols = false;
+            } 
 
             m_Busy = false;
         }  
