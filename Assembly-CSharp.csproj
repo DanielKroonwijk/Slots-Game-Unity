@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Vectors.cs" />
     <Compile Include="Assets\Scripts\BetSizeManager.cs" />
     <Compile Include="Assets\Scripts\GenerateBoard.cs" />
+    <Compile Include="Assets\Scripts\DoubleChanceButton.cs" />
     <Compile Include="Assets\Scripts\InitiateMultiplier.cs" />
     <Compile Include="Assets\Scripts\SymbolManager.cs" />
     <Compile Include="Assets\Scripts\GameLibraryManager.cs" />

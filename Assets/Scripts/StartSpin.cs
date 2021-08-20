@@ -97,7 +97,7 @@ namespace Assets.Scripts
             else if (m_ThirdPartDone == true)
             {
                 m_ThirdPartDone = false;
-                Invoke("ContinueSpin3", 2f);
+                Invoke("ContinueSpin3", 4f);
             }
             else if (m_RestartLoop == true)
             {
