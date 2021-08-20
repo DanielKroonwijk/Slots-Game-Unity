@@ -75,7 +75,8 @@ namespace Assets.Scripts
                 }
             }
 
-            return $"$  {totalWinNumber:0.00}";
+            GameLibrary.totalWin += totalWinNumber;
+            return $"$  {GameLibrary.totalWin:0.00}";
         }
 
         public static void RemoveSymbols()

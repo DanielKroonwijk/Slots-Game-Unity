@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public Text chanceText;
         private bool m_SecondPartDone = false;
         private bool m_ThirdPartDone = false;
+        private bool m_RestartLoop = false;
 
         public void OnButtonClick()
         {
@@ -20,7 +21,9 @@ namespace Assets.Scripts
             {
                 GameLibrary.spinActive = true;
                 GameLibrary.gameObjectID = 0;
+                GameLibrary.totalWin = 0.00;
                 GameLibrary.newSpin = true;
+                chanceText.text = $"$  {GameLibrary.totalWin:0.00}";
                 var initGameBoard = new GenerateNewBoard();
                 initGameBoard.Generate(out GameLibrary.gameBoard);
                 for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
@@ -65,7 +68,15 @@ namespace Assets.Scripts
 
         public void ContinueSpin3()
         {
-            
+            GameLibrary.allNewSymbolsAssigned = false;
+            GameLibrary.rowID = 0;
+            GameLibrary.chanceGameObjectID = -1;
+            GameLibrary.newGameObjectID = -1;
+            GameLibrary.removeGameObjectID.Clear();
+            GameLibrary.addGameObjectID.Clear();
+            GameLibrary.removeSymbols.Clear();
+            GameLibrary.gameObjectID = 0;
+            m_RestartLoop = true;
         }
 
         void Update()
@@ -73,7 +84,6 @@ namespace Assets.Scripts
             if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
             {
                 GameLibrary.allgameObjectsAssigned = false;
-                GameLibrary.allNewSymbolsAssigned = false;
                 GameLibrary.firstPartDone = false;
                 GameLibrary.gameObjectID = 0;
                 Invoke("ContinueSpin1", 2f);
@@ -87,7 +97,12 @@ namespace Assets.Scripts
             else if (m_ThirdPartDone == true)
             {
                 m_ThirdPartDone = false;
-                Invoke("ContinueSpin3", 3f);
+                Invoke("ContinueSpin3", 2f);
+            }
+            else if (m_RestartLoop == true)
+            {
+                m_RestartLoop = false;
+                Invoke("ContinueSpin1", 1f);
             }
         }
     }

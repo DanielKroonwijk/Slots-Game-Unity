@@ -34,7 +34,7 @@ namespace Assets.Scripts
             {
                 gameObjectSpecificID = GameLibrary.addGameObjectID[GameLibrary.newGameObjectID];
                 GameLibrary.newGameObjectID++;
-                if (GameLibrary.newGameObjectID >= GameLibrary.addGameObjectID.Count)
+                if (GameLibrary.newGameObjectID >= GameLibrary.removeGameObjectID.Count)
                 {
                     GameLibrary.assignNewSymbolID = false;
                     GameLibrary.newGameObjectID = 0;
@@ -57,27 +57,28 @@ namespace Assets.Scripts
                     name = $"TargetGameObject{gameObjectSpecificID}";
                 }
             }
-            else if ((GameLibrary.allNewSymbolsAssigned == true) && (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count))
+            else if ((GameLibrary.allNewSymbolsAssigned == true) && (GameLibrary.gameObjectID == gameObjectSpecificID) && (m_GameObjectInUse == false))
             {
-                if ((GameLibrary.addGameObjectID[GameLibrary.gameObjectID] == gameObjectSpecificID) && (m_GameObjectInUse == false))
-                {
-                    Debug.Log("2");
                     m_GameObjectInUse = true;
                     name = $"TargetGameObject{gameObjectSpecificID}";
-                }
             }
             else if (m_GameObjectInUse == true)
             {
-                if (GameLibrary.allNewSymbolsAssigned == true) { Debug.Log("1"); }
                 if (transform.position.y <= -10)
                 {
                     Destroy(gameObject);
                 }
-                if ((transform.position.y <= GameLibrary.symbolStopPosition[gameObjectSpecificID].y) && (m_OldGameObject != true))
+                else if ((transform.position.y <= GameLibrary.symbolStopPosition[gameObjectSpecificID].y) && (m_OldGameObject != true))
                 {
                     Destroy(GetComponent<Rigidbody2D>());
                     transform.position = GameLibrary.symbolStopPosition[gameObjectSpecificID];
                     m_OldGameObject = true;
+                    m_GameObjectInUse = false;
+                }
+                else if ((transform.position.y <= GameLibrary.symbolStopPosition[gameObjectSpecificID].y) && (GameLibrary.allNewSymbolsAssigned == true))
+                {
+                    Destroy(GetComponent<Rigidbody2D>());
+                    transform.position = GameLibrary.symbolStopPosition[gameObjectSpecificID];
                     m_GameObjectInUse = false;
                 }
             }

@@ -23,7 +23,7 @@ namespace Assets.Scripts
         public static int newGameObjectID = -1;
         public static int chanceGameObjectID = -1;
         public static int rowID = 0;
-        public static string totalWin = "$  0.00";
+        public static double totalWin = 0.00;
         public static bool allgameObjectsAssigned = false;
         public static bool gameStartBoard = true;
         public static bool firstPartDone = false;

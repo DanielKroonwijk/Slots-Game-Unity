@@ -31,18 +31,21 @@ namespace Assets.Scripts
                     m_GameObjectNew.AddComponent<Rigidbody2D>();
                 }
             }
-            else if ((GameLibrary.allNewSymbolsAssigned == true) && (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count) && (m_Busy != true))
+            else if ((GameLibrary.allNewSymbolsAssigned == true) && (m_Busy != true))
             {
-                if (GameLibrary.gameObjectID < GameLibrary.addGameObjectID.Count)
-                {
-                    m_GameObjectNew = GameObject.Find($"TargetGameObject{GameLibrary.addGameObjectID[GameLibrary.gameObjectID]}");
-                }
-                if ((m_GameObjectNew != null) && (m_GameObjectNew.GetComponent<Rigidbody2D>() == null))
+                m_GameObjectNew = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
+
+                if ((m_GameObjectNew != null) && (m_GameObjectNew.GetComponent<Rigidbody2D>() == null) && (m_GameObjectNew.transform.position.y > GameLibrary.symbolStopPosition[GameLibrary.gameObjectID].y))
                 {
                     m_Busy = true;
                     GameLibrary.gameObjectID++;
 
                     m_GameObjectNew.AddComponent<Rigidbody2D>();
+                }
+                else if ((m_GameObjectNew != null) && (m_GameObjectNew.transform.position.y <= GameLibrary.symbolStopPosition[GameLibrary.gameObjectID].y))
+                {
+                    m_Busy = true;
+                    GameLibrary.gameObjectID++;
                 }
             }
             else if (GameLibrary.reAssignGameObjectID == true)
@@ -87,10 +90,12 @@ namespace Assets.Scripts
             {
                 m_Busy = true;
                 int count = 0;
+                int spawnColumn;
                 GameLibrary.newGameObjectID = 0;
                 GameLibrary.assignNewSymbolID = true;
                 for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
                 {
+                    spawnColumn = GameLibrary.gameInfo.boardColumn - 1;
                     for (int column = GameLibrary.gameInfo.boardColumn - 1; column > -1; column--)
                     {
                         var newGameObject = GameObject.Find($"TargetGameObject{GameLibrary.gameObjectID}");
@@ -100,8 +105,10 @@ namespace Assets.Scripts
 
                             Instantiate(
                                 GameLibrary.gameBoard[column, row].symbolPrefab,
-                                GameLibrary.spawnVector[column, row],
+                                GameLibrary.spawnVector[spawnColumn, row],
                                 GameLibrary.gameObjects[0].transform.rotation);
+
+                            spawnColumn--;
                         }
                         GameLibrary.gameObjectID++;
                         count++;
