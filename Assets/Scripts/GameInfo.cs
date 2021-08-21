@@ -13,7 +13,6 @@ namespace Assets.Scripts
         public int boardColumn;
         public bool bonusActive;
         public int bonusSymbols;
-        public bool doubleChanceActive;
         public int scattersForBonus;
         public bool dropInSymbols;
         public bool bonusGuarantee;
@@ -27,9 +26,8 @@ namespace Assets.Scripts
             gameInfo.name = "SweetBonanza";
             gameInfo.boardRow = 6;
             gameInfo.boardColumn = 5;
-            gameInfo.bonusActive = false;
+            gameInfo.bonusActive = true;
             gameInfo.bonusSymbols = 1;
-            gameInfo.doubleChanceActive = false;
             gameInfo.dropInSymbols = true;
             gameInfo.scattersForBonus = 4;
             gameInfo.bonusGuarantee = false;

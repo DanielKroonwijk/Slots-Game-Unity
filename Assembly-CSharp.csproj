@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\InitiateSymbols.cs" />
+    <Compile Include="Assets\Scripts\StartBonus.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />
     <Compile Include="Assets\Scripts\Vectors.cs" />
     <Compile Include="Assets\Scripts\BetSizeManager.cs" />

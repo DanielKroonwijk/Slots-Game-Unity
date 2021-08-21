@@ -33,10 +33,21 @@ namespace Assets.Scripts
         {
 
             int chance = 0;
-            for (int i = 0; i < GameLibrary.symbols.Length - GameLibrary.gameInfo.bonusSymbols; i++)
+            if (GameLibrary.gameInfo.bonusActive != true)
             {
-                var symbol = GameLibrary.symbols[i];
-                chance += symbol.symbolChance;
+                for (int i = 0; i < GameLibrary.symbols.Length - GameLibrary.gameInfo.bonusSymbols; i++)
+                {
+                    var symbol = GameLibrary.symbols[i];
+                    chance += symbol.symbolChance;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < GameLibrary.symbols.Length; i++)
+                {
+                    var symbol = GameLibrary.symbols[i];
+                    chance += symbol.symbolChance;
+                }
             }
 
             int randomNumber;

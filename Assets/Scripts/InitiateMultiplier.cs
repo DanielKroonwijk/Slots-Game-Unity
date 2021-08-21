@@ -13,19 +13,19 @@ namespace Assets.Scripts
         public int multiplierChance;
     }
 
-    public class InitiateMultiplier
+    public static class InitiateMultiplier
     {
-        public void Initiate(GameInfo gameInfo, out Multiplier[] multipliers)
+        public static Multiplier[] Initiate()
         {
-            var MultiplierReadLineData = Read(gameInfo);
+            var MultiplierReadLineData = Read();
             var orderedMultiplierData = Process(MultiplierReadLineData);
-            multipliers = Assign(orderedMultiplierData);
+            return Assign(orderedMultiplierData);
         }
 
-        public List<string> Read(GameInfo gameInfo)
+        public static List<string> Read()
         {
             var multiplierReadLineData = new List<string>();
-            var reader = new StreamReader($"{gameInfo.name}-MultiplierData.txt");
+            var reader = new StreamReader($"{GameLibrary.gameInfo.name}-MultiplierData.txt");
             while (reader.EndOfStream == false)
             {
                 multiplierReadLineData.Add(reader.ReadLine());
@@ -35,7 +35,7 @@ namespace Assets.Scripts
             return multiplierReadLineData;
         }
 
-        public List<string[]> Process(List<string> multiplierReadLineData)
+        public static List<string[]> Process(List<string> multiplierReadLineData)
         {
             var orderedMultiplierData = new List<string[]>();
             for (int i = 0; i < multiplierReadLineData.Count; i++)
@@ -47,7 +47,7 @@ namespace Assets.Scripts
             return orderedMultiplierData;
         }
 
-        public Multiplier[] Assign(List<string[]> orderedMultiplierData)
+        public static Multiplier[] Assign(List<string[]> orderedMultiplierData)
         {
             var multipliers = new Multiplier[orderedMultiplierData.Count];
             for (int i = 0; i < orderedMultiplierData.Count; i++)

@@ -11,6 +11,7 @@ namespace Assets.Scripts
     public class BetSizeManager : MonoBehaviour
     {
         public Text betSizeText;
+        private bool m_Switch = false;
 
         private void Start()
         {
@@ -26,10 +27,17 @@ namespace Assets.Scripts
 
         public void UpBetSize()
         {
-            if((GameLibrary.betSizeID != GameLibrary.betSizes.Length - 1) && (GameLibrary.spinActive != true))
+            if ((GameLibrary.betSizeID != GameLibrary.betSizes.Length - 1) && (GameLibrary.spinActive != true))
             {
                 GameLibrary.betSizeID++;
-                betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID]:0.00}";
+                if (GameLibrary.doubleChanceON == false)
+                {
+                    betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID]:0.00}";
+                }
+                else
+                {
+                    betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID] * 1.25:0.00}";
+                }
             }
         }
 
@@ -38,6 +46,27 @@ namespace Assets.Scripts
             if((GameLibrary.betSizeID != 0) && (GameLibrary.spinActive != true))
             {
                 GameLibrary.betSizeID--;
+                if (GameLibrary.doubleChanceON == false)
+                {
+                    betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID]:0.00}";
+                }
+                else
+                {
+                    betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID] * 1.25:0.00}";
+                }
+            }
+        }
+
+        public void UpdateBetSize()
+        {
+            if(m_Switch == false)
+            {
+                m_Switch = true;
+                betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID] * 1.25:0.00}";
+            }
+            else
+            {
+                m_Switch = false;
                 betSizeText.text = $"$ {GameLibrary.betSizes[GameLibrary.betSizeID]:0.00}";
             }
         }

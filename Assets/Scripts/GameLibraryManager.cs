@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class GameLibraryManager : MonoBehaviour
     {
         public InititiateGameObjects initGameObjects;
+        public Text balanceText;
 
         void Start()
         {
+            Time.timeScale = 1.5f;
+
+            balanceText.text = $"$ {GameLibrary.balance:0.00}";
+
             initGameObjects.Initiate(out GameLibrary.gameObjects);
 
             GameLibrary.gameInfo = SetGameInfo.Set();
@@ -19,6 +25,7 @@ namespace Assets.Scripts
             vectors.SetOnBoard(out GameLibrary.onBoardVector);
 
             GameLibrary.symbols = InitiateSymbols.Initiate();
+            GameLibrary.multipliers = InitiateMultiplier.Initiate();
 
             int count = 0;
             for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
@@ -51,6 +58,7 @@ namespace Assets.Scripts
                 }
             }
 
+            GameLibrary.startBonus = true; //
             GameLibrary.gameStartBoard = false;
         }
     } 

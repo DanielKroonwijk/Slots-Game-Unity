@@ -10,7 +10,8 @@ namespace Assets.Scripts
 {
     class StartSpin : MonoBehaviour
     {
-        public Text chanceText;
+        public Text WinText;
+        public Text balanceText;
         private bool m_SecondPartDone = false;
         private bool m_ThirdPartDone = false;
         private bool m_RestartLoop = false;
@@ -23,7 +24,18 @@ namespace Assets.Scripts
                 GameLibrary.gameObjectID = 0;
                 GameLibrary.totalWin = 0.00;
                 GameLibrary.newSpin = true;
-                chanceText.text = $"$  {GameLibrary.totalWin:0.00}";
+                if (GameLibrary.doubleChanceON == false)
+                {
+                    GameLibrary.balance -= GameLibrary.betSizes[GameLibrary.betSizeID];
+                }
+                else
+                {
+                    GameLibrary.balance -= GameLibrary.betSizes[GameLibrary.betSizeID] * 1.25;
+                }
+                balanceText.text = $"$ {GameLibrary.balance:0.00}";
+                WinText.text = $"$ {GameLibrary.totalWin:0.00}";
+
+
                 var initGameBoard = new GenerateNewBoard();
                 initGameBoard.Generate(out GameLibrary.gameBoard);
                 for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
@@ -46,13 +58,20 @@ namespace Assets.Scripts
             if (GameElements.CheckHit() == true)
             {
                 GameLibrary.newSpin = false;
-                chanceText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
+                WinText.text = GameElements.CalculateSymbolWin(out GameLibrary.removeSymbols);
                 GameElements.RemoveSymbols();
                 m_SecondPartDone = true;
+            }
+            else if (GameElements.CheckScatters(out double scatterWin) == true)
+            {
+                GameLibrary.totalWin += scatterWin;
+                WinText.text = $"$ {GameLibrary.totalWin:0.00}";
             }
             else
             {
                 GameLibrary.spinActive = false;
+                GameLibrary.balance += GameLibrary.totalWin;
+                balanceText.text = $"$ {GameLibrary.balance:0.00}";
             }
         }
 
@@ -81,7 +100,7 @@ namespace Assets.Scripts
 
         void Update()
         {
-            if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30))
+            if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID >= 30) && (GameLibrary.gameInfo.bonusActive == false))
             {
                 GameLibrary.allgameObjectsAssigned = false;
                 GameLibrary.firstPartDone = false;

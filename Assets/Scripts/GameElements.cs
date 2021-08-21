@@ -55,28 +55,36 @@ namespace Assets.Scripts
 
                 if (count >= 8)
                 {
-                    if (symbol.symbolPrefab != GameLibrary.symbols[0].symbolPrefab)
+                    if ((symbol.symbolPrefab != GameLibrary.symbols[0].symbolPrefab) && (symbol.symbolPrefab != GameLibrary.symbols[GameLibrary.symbols.Length - 1].symbolPrefab))
                     {
                         removeSymbol.Add(symbol);
-                    }
 
-                    if ((count >= 8) && (count <= 9))
-                    {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[0] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
-                    }
-                    else if ((count >= 10) && (count <= 11))
-                    {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[1] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
-                    }
-                    else
-                    {
-                        totalWinNumber += GameLibrary.symbols[i].symbolPayouts[2] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                        if ((count >= 8) && (count <= 9))
+                        {
+                            totalWinNumber += GameLibrary.symbols[i].symbolPayouts[0] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                        }
+                        else if ((count >= 10) && (count <= 11))
+                        {
+                            totalWinNumber += GameLibrary.symbols[i].symbolPayouts[1] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                        }
+                        else
+                        {
+                            totalWinNumber += GameLibrary.symbols[i].symbolPayouts[2] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                        }
                     }
                 }
             }
 
-            GameLibrary.totalWin += totalWinNumber;
-            return $"$  {GameLibrary.totalWin:0.00}";
+            if (GameLibrary.gameInfo.bonusActive != true)
+            {
+                GameLibrary.totalWin += totalWinNumber;
+                return $"$ {GameLibrary.totalWin:0.00}";
+            }
+            else
+            {
+                GameLibrary.tumbleWin += totalWinNumber;
+                return $"$ {GameLibrary.tumbleWin:0.00}";
+            }
         }
 
         public static void RemoveSymbols()
@@ -148,6 +156,97 @@ namespace Assets.Scripts
                     }
                 }
             }
+        }
+
+        public static bool CheckScatters(out double scatterWin)
+        {
+            int count = 0;
+            scatterWin = 0;
+            for (int column = 0; column < GameLibrary.gameBoard.GetLength(0); column++)
+            {
+                for (int row = 0; row < GameLibrary.gameBoard.GetLength(1); row++)
+                {
+                    if (GameLibrary.gameBoard[column, row] == GameLibrary.symbols[0])
+                    {
+                        count++;
+                        if (count >= 4)
+                        {
+                            if (count == 4)
+                            {
+                                scatterWin = GameLibrary.symbols[0].symbolPayouts[0] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                            }
+                            else if (count == 5)
+                            {
+                                scatterWin = GameLibrary.symbols[0].symbolPayouts[1] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                            }
+                            else
+                            {
+                                scatterWin = GameLibrary.symbols[0].symbolPayouts[2] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                            }
+
+                            GameLibrary.gameInfo.bonusActive = true;
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static void ApplyMultiplier()
+        {
+            int totalMultiplier = 0;
+            for (int column = 0; column < GameLibrary.gameInfo.boardColumn; column++)
+            {
+                for (int row = 0; row < GameLibrary.gameInfo.boardRow; row++)
+                {
+                    totalMultiplier += GameLibrary.gameBoard[column, row].multi;
+                }
+            }
+
+            if (totalMultiplier > 0)
+            {
+                GameLibrary.tumbleWin *= totalMultiplier;
+            }
+        }
+
+        public static bool CheckIfBonusRetriggers()
+        {
+            bool bonusRetrigger = false;
+            double totalWin = 0;
+            int count = 0;
+            var symbol = GameLibrary.symbols[0];
+            for (int column = 0; column < GameLibrary.gameBoard.GetLength(0); column++)
+            {
+                for (int row = 0; row < GameLibrary.gameBoard.GetLength(1); row++)
+                {
+                    if (GameLibrary.gameBoard[column, row].symbolPrefab == symbol.symbolPrefab)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            if (count >= 3)
+            {
+                bonusRetrigger = true;
+                if (count == 4)
+                {
+                    totalWin =  symbol.symbolPayouts[0] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                }
+                else if (count == 5)
+                {
+                    totalWin = symbol.symbolPayouts[1] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                }
+                else if (count != 3)
+                {
+                    totalWin = symbol.symbolPayouts[2] * GameLibrary.betSizes[GameLibrary.betSizeID] / 100;
+                }
+            }
+
+            GameLibrary.totalWin += totalWin;
+            return bonusRetrigger;
         }
     }
 }

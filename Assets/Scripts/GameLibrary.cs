@@ -10,6 +10,7 @@ namespace Assets.Scripts
         public static GameObject[] gameObjects;
         public static Symbol[] symbols;
         public static Symbol[,] gameBoard;
+        public static Multiplier[] multipliers;
         public static Vector3[,] spawnVector;
         public static Vector3[,] onBoardVector;
         public static double[] betSizes;
@@ -24,6 +25,7 @@ namespace Assets.Scripts
         public static int chanceGameObjectID = -1;
         public static int rowID = 0;
         public static double totalWin = 0.00;
+        public static double tumbleWin = 0.00;
         public static bool allgameObjectsAssigned = false;
         public static bool gameStartBoard = true;
         public static bool firstPartDone = false;
@@ -34,7 +36,10 @@ namespace Assets.Scripts
         public static bool addSymbols = false;
         public static bool assignNewSymbolID = false;
         public static bool allNewSymbolsAssigned = false;
+        public static bool startBonus = false;
 
         public static int betSizeID;
+        public static double balance = 100.00;
+        public static bool doubleChanceON = false;
     } 
 }
