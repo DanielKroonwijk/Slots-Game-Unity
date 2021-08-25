@@ -12,6 +12,7 @@ namespace Assets.Scripts
         public Text freeSpinsLeft;
         public Text tumbleWinText;
         public GameObject bonusAlert;
+        public GameObject bonusSummary;
         public GameObject buyBonusBuyButton;
         public GameObject doubleChanceButton;
         public GameObject startSpinButton;
@@ -22,9 +23,9 @@ namespace Assets.Scripts
         private bool m_WaitingForClick1 = false;
         private bool m_WaitingForClick2 = false;
         private bool m_WaitingForClick3 = false;
+        private bool m_WaitingForClick4 = false;
         private bool m_SecondPartDone = false;
         private bool m_ThirdPartDone = false;
-        private bool m_FourthPartDone = false;
         private bool m_RestartLoop = false;
 
         public void SetupBonus()
@@ -66,6 +67,11 @@ namespace Assets.Scripts
                 }
 
                 GameLibrary.firstPartDone = true;
+            }
+            else
+            {
+                bonusSummary.GetComponent<MeshRenderer>().enabled = true;
+                m_WaitingForClick4 = true;
             }
         }
 
@@ -134,10 +140,11 @@ namespace Assets.Scripts
             {
                 freeSpinsLeft.text = "";
             }
+
             if ((GameLibrary.gameInfo.bonusActive == true) && (GameLibrary.startBonus == true))
             {
                 GameLibrary.startBonus = false;
-                Invoke("SetupBonus", 5f);
+                Invoke("SetupBonus", 3f);
             }
             else if ((m_WaitingForClick1 == true) && (Input.GetMouseButtonDown(0)))
             {
@@ -155,6 +162,20 @@ namespace Assets.Scripts
             {
                 Invoke("ContinueBonus1", 4f);
                 bonusAlert.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else if ((m_WaitingForClick4 == true) && (Input.GetMouseButtonDown(0)))
+            {
+                m_WaitingForClick4 = false;
+                GameLibrary.balance += GameLibrary.totalWin;
+                balanceText.text = $"$ {GameLibrary.balance:0.00}";
+                bonusSummary.GetComponent<MeshRenderer>().enabled = false;
+                buyBonusBuyButton.GetComponent<Button>().enabled = true;
+                doubleChanceButton.GetComponent<Button>().enabled = true;
+                startSpinButton.GetComponent<Button>().enabled = true;
+                upBetSizeButton.GetComponent<Button>().enabled = true;
+                downBetsizeButton.GetComponent<Button>().enabled = true;
+                GameLibrary.gameInfo.bonusActive = false;
+                GameLibrary.spinActive = false;
             }
             else if ((GameLibrary.firstPartDone == true) && (GameLibrary.gameObjectID == 5 * 6) && (GameLibrary.gameInfo.bonusActive == true))
             {

@@ -39,7 +39,7 @@ namespace Assets.Scripts
         public static bool startBonus = false;
 
         public static int betSizeID;
-        public static double balance = 100.00;
+        public static double balance = 50000.00;
         public static bool doubleChanceON = false;
     } 
 }

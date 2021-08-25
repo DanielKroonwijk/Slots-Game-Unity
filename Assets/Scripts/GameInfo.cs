@@ -26,11 +26,10 @@ namespace Assets.Scripts
             gameInfo.name = "SweetBonanza";
             gameInfo.boardRow = 6;
             gameInfo.boardColumn = 5;
-            gameInfo.bonusActive = true;
+            gameInfo.bonusActive = false;
             gameInfo.bonusSymbols = 1;
             gameInfo.dropInSymbols = true;
             gameInfo.scattersForBonus = 4;
-            gameInfo.bonusGuarantee = false;
 
             return gameInfo;
         }

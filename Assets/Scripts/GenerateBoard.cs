@@ -75,6 +75,11 @@ namespace Assets.Scripts
                 }
             }
 
+            if (numberInSymbol.symbolPrefab == GameLibrary.symbols[GameLibrary.symbols.Length - 1].symbolPrefab)
+            {
+                numberInSymbol = GameElements.GetMultiplier(numberInSymbol);
+            }
+
             return numberInSymbol;
         }
     }

@@ -66,6 +66,7 @@ namespace Assets.Scripts
             {
                 GameLibrary.totalWin += scatterWin;
                 WinText.text = $"$ {GameLibrary.totalWin:0.00}";
+                GameLibrary.startBonus = true;
             }
             else
             {
@@ -116,7 +117,7 @@ namespace Assets.Scripts
             else if (m_ThirdPartDone == true)
             {
                 m_ThirdPartDone = false;
-                Invoke("ContinueSpin3", 4f);
+                Invoke("ContinueSpin3", 2f);
             }
             else if (m_RestartLoop == true)
             {
